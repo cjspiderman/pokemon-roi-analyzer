@@ -1,0 +1,4 @@
+<Project>
+  <PropertyGroup><SolutionVersion>2.0.0</SolutionVersion></PropertyGroup>
+  <ItemGroup><ProjectCapability Include="CSharp" /></ItemGroup>
+</Project>

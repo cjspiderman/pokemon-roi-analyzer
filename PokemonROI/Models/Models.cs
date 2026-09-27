@@ -1,0 +1,7 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+namespace PokemonROI.Models;
+public abstract class Notify : INotifyPropertyChanged { public event PropertyChangedEventHandler? PropertyChanged; protected void Set<T>(ref T field,T value,[CallerMemberName] string? name=null){if(!EqualityComparer<T>.Default.Equals(field,value)){field=value;PropertyChanged?.Invoke(this,new(name));}} }
+public sealed class Card : Notify { public string Id {get;set;}=""; public string Name {get;set;}=""; public string SetName {get;set;}=""; public string Number {get;set;}=""; public string Rarity {get;set;}=""; public string ImageUrl {get;set;}=""; public decimal? MarketPrice {get;set;} public string Source {get;set;}="Pokémon TCG API"; public DateTime? UpdatedAt {get;set;} }
+public sealed class PortfolioItem : Notify { public long Id {get;set;} public string CardId {get;set;}=""; public string CardName {get;set;}=""; public string SetName {get;set;}=""; public string Grade {get;set;}="Raw"; public int Quantity {get;set;}=1; public decimal PurchasePrice {get;set;} public DateTime PurchaseDate {get;set;}=DateTime.Today; public decimal? CurrentPrice {get;set;} public string Notes {get;set;}=""; public decimal Invested=>Quantity*PurchasePrice; public decimal CurrentValue=>Quantity*(CurrentPrice??PurchasePrice); public decimal Profit=>CurrentValue-Invested; public decimal Roi=>Invested==0?0:Profit/Invested*100; }
+public sealed record PricePoint(DateTime Date, decimal Price, string Source, string Condition="Raw");
